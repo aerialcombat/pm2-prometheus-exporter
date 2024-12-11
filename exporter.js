@@ -121,7 +121,12 @@ const exporter = () => {
       case '/':
         return res.end('<html>PM2 metrics: <a href="/metrics">/metrics</a></html>');
       case '/metrics':
-        return metrics().then(data => res.end(data));
+        res.writeHead(200, { 'Content-Type': 'text/plain' }); // Set Content-Type for Prometheus metrics
+        return metrics().then(data => res.end(data)).catch(err => {
+          logger.error(err);
+          res.writeHead(500, { 'Content-Type': 'text/plain' });
+          res.end('Internal Server Error');
+        });
       default:
         return res.end('404');
     }
