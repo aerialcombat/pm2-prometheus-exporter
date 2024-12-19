@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'PM2 Exporter',
+    name: 'pm2-metrics',
     script: 'exporter.js',
     instances: 1,
     autorestart: true,
